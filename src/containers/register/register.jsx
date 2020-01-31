@@ -8,13 +8,17 @@ import {
     InputItem,
     WhiteSpace,
     Radio,
-    Button
+    Button,
+    Toast
 } from 'antd-mobile'
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
+import {register} from '../..//redux/actions'
 import Logo from '../../components/logo/logo'
 
 const ListItem = List.Item
 
-export default class Register extends Component {
+class Register extends Component {
     state = {
         username: '', //用户名
         password:'', // 密码
@@ -22,7 +26,15 @@ export default class Register extends Component {
         type: 'laoban' // 类型dashen/laoban
     }
     register = () => {
-
+        this.props.register(this.state)
+        const {msg} = this.props.user
+        console.log(msg)
+        if(msg){
+            Toast.fail(msg)
+        }else{
+            Toast.success('注册成功！')
+        }
+        
     }
     // 处理输入数据的改变： 更新对应的状态
     handleChange = (name, val) => {
@@ -36,6 +48,11 @@ export default class Register extends Component {
     }
     render() {
         const {type} = this.state
+        const {redirectTo} = this.props.user
+        // 如果有值，就会自动重定向
+        if(redirectTo) {
+            return <Redirect to={redirectTo}/>
+        }
         return (
             <div>
                <NavBar>硅谷直聘</NavBar>
@@ -64,3 +81,8 @@ export default class Register extends Component {
         )
     }
 }
+
+export default connect(
+    state =>({user: state.user}),
+    {register}
+)(Register)

@@ -43,3 +43,23 @@
 
 # 组件是放在components还是containers
 若需要交互，就放在containers
+
+# node+express
+## 修改端口
+- 在bin/www后台修改端口为4000
+- 配置后台路由在routes/index.js， 路由方式post 
+- 使用postman测试后台接口
+## 后台自动重运行
+- npm install nodemon --save-dev
+- 修改package.json "start": "nodemon ./bin/www"
+
+# 数据库mongoose后台处理
+- 因为登录/注册有密码，需要MD5, npm install --save mongoose blueimp-md5
+-  数据库CRUD操作
+
+# 注册、登录前台处理
+## ajax->axios
+ - npm install --save -axios
+## redux
+ -  前端端口3000， 后端端口4000，使用代理服务器
+## component
