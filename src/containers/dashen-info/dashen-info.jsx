@@ -11,7 +11,8 @@ import {
     TextareaItem
 } from 'antd-mobile'
 import HeaderSelect from '../../components/header-select/header-select'
-
+import {updateUser} from '../../redux/actions'
+import { Redirect } from 'react-router-dom'
 class DashenInfo extends Component {
     state = {
         info: '',
@@ -31,7 +32,17 @@ class DashenInfo extends Component {
             header
         })
         }
+    // 保存信息，发送到后台
+    save = () =>{
+        this.props.updateUser(this.state)
+    }
     render(){
+        // 如果信息完善，自动重定向到对应主界面
+        const {header, type} = this.props.user
+        if(header){
+            const path = type === 'dashen' ? '/dashen' : '/laoban'
+            return <Redirect to={path} />
+        }
         return (
             <div>
                 <NavBar>大神信息完善</NavBar>
@@ -40,12 +51,13 @@ class DashenInfo extends Component {
                 <TextareaItem title='个人介绍：'
                     rows={4} 
                     onChange={val => this.handleChange('info', val)}/>
-                <Button type="primary">保存</Button>
+                <Button type="primary" onClick={this.save}>保存</Button>
             </div>
         )
     }
 }
 
 export default connect(
-    state => ({})
+    state => ({user: state.user}),
+    {updateUser}
 )(DashenInfo)

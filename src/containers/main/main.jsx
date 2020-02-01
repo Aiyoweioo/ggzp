@@ -5,8 +5,13 @@ import {connect} from 'react-redux'
 import {Switch, Route} from 'react-router-dom'
 import LaobanInfo from '../laoban-info/laoban-info'
 import DashenInfo from '../dashen-info/dashen-info'
- class Main extends Component {
+class Main extends Component {
     render() {
+        // 检查用户是否登录，如果没有，则自动重定向到登录界面
+        const  {user} = this.props
+        if(!user._id){
+            this.props.history.replace('/login')
+        }
         return (
             <div>
                 <Switch>
@@ -19,5 +24,5 @@ import DashenInfo from '../dashen-info/dashen-info'
 }
 
 export default connect(
-    state => ({})
+    state => ({user: state.user})
 )(Main)

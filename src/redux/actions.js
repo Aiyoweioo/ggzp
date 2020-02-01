@@ -3,13 +3,16 @@
 异步action
 同步action
  */
-import {reqRegister, reqLogin} from '../api'
-import {AUTH_SUCCESS, ERROR_MSG} from './action-types'
+import {reqRegister, reqLogin, reqUpdateUser} from '../api'
+import {AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER} from './action-types'
 // 授权成功的action
 const authSuccess = (user) => ({type: AUTH_SUCCESS, data: user})
 // 错误信息的action
 const errorMsg = (msg) => ({type: ERROR_MSG, data: msg})
-
+// 接收用户的同步action
+const receiveUser = (user) => ({type: RECEIVE_USER, data: user})
+// 重置用户的同步action
+const resetUser = (msg) => ({type: RESET_USER, data: msg})
  // 注册的异步action
 export const register = (user) =>{
     const {username, password, password1, type} = user
@@ -61,3 +64,18 @@ export const register = (user) =>{
         }
      }
  }
+
+//  更新用户异步action
+export const updateUser = (user) =>{
+    return async dispatch => {
+        const res = await reqUpdateUser(user)
+        const result = res.data
+        if(result.code === 0){
+            // 更新成功
+            dispatch(receiveUser(result.data))
+        }else{
+            // 更新失败:msg
+            dispatch(resetUser(result.data))
+        }
+    }
+}

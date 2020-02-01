@@ -33,6 +33,12 @@ class Register extends Component {
             Toast.fail(msg)
         }else{
             Toast.success('注册成功！')
+            if(this.state.type === 'laoban'){
+                return <Redirect to='/laobaninfo' />
+            }else{
+                return <Redirect to='/dasheninfo' />
+            }
+            
         }
         
     }

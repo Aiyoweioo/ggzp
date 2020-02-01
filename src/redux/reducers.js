@@ -4,20 +4,27 @@
 
 
 import {combineReducers} from 'redux'
-import {AUTH_SUCCESS, ERROR_MSG} from './action-types'
+import {AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER} from './action-types'
+import {getRedirectTo} from '../utils/index'
 const initUser = {
   username: '', // 用户名
   type: '', //dashen laoban
   msg:'' ,//错误提示信息
   redirectTo: '' // 需要自动重定向的路由
 }
+
 // 产生user状态的reducer
 function user(state=initUser, action){
   switch(action.type){
     case AUTH_SUCCESS: // data是user,将原来的数据解构出来，action.data覆盖掉
-      return {...action.data, redirectTo:'/'}
+    const {type, header} = action.data
+      return {...action.data, redirectTo:getRedirectTo(type, header)}
     case ERROR_MSG: // data是msg
       return {...state, msg: action.data}
+    case RECEIVE_USER: // data是user
+      return action.data
+    case RESET_USER: // data是msg
+      return {...initUser, msg: action.data}
     default:
       return state
   }
