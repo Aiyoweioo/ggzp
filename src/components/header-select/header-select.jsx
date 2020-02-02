@@ -13,7 +13,7 @@ export default class HeaderSelect extends Component {
         for(let i = 0; i < 20; i++){
             this.headerData.push({
                 text: '头像' + (i+1),
-                icon: require(`../../assets/images/头像${i+1}.png`) // commonjs动态导入,不能使用import
+                icon: require(`../../assets/images/header_images/头像${i+1}.png`) // commonjs动态导入,不能使用import
             })
         }
     }

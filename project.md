@@ -63,3 +63,13 @@
 ## redux
  -  前端端口3000， 后端端口4000，使用代理服务器
 ## component
+# 主页面
+ - dashen/laoban 
+ - personal 个人主页
+ - message 消息对话
+ - not found 查找不到
+ ## 希望在非路由组中使用路由库的api
+ - nav-footer是一个UI组件不是路由组件
+withRouter import {withRouter} from 'react-router-dom'
+- 向外暴露withRouter() 包装产生的组件，内部会向组件传入一些路由组件特有的属性： history/location/math
+- 类似connect

@@ -6,14 +6,13 @@ import {
     List, 
     InputItem,
     WhiteSpace,
-    Button,
-    Toast
+    Button
 } from 'antd-mobile'
 import {login} from '../../redux/actions'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import Logo from '../../components/logo/logo'
-
+import '../../assets/css/style.less'
 
 
 class Login extends Component {
@@ -35,26 +34,24 @@ class Login extends Component {
     // 登录
     login = () =>{
         this.props.login(this.state)
-        const {msg} = this.props.user
-        console.log(msg)
-        if(msg){
-            Toast.fail(msg)
-        }else{
-            Toast.success('登录成功！')
-        }
 
     }
     render() {
-        const {redirectTo} = this.props.user
+        const {redirectTo, msg} = this.props.user
         if(redirectTo){
             return <Redirect to={redirectTo}/>
         }
+        // console.log(msg)
+        // if(msg){
+        //     Toast.fail(msg)
+        // }
         return (
             <div>
                <NavBar>硅谷直聘</NavBar>
                <Logo />
                <WingBlank>
                    <List>
+                   {msg ? <div className='error-msg'>{msg}</div> : null}
                        <WhiteSpace/>
                        <InputItem onChange={val=> {this.handleChange('username', val)}}>用户名：</InputItem>
                        <WhiteSpace/>    

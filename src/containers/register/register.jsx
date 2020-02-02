@@ -9,7 +9,6 @@ import {
     WhiteSpace,
     Radio,
     Button,
-    Toast
 } from 'antd-mobile'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
@@ -27,19 +26,6 @@ class Register extends Component {
     }
     register = () => {
         this.props.register(this.state)
-        const {msg} = this.props.user
-        console.log(msg)
-        if(msg){
-            Toast.fail(msg)
-        }else{
-            Toast.success('注册成功！')
-            if(this.state.type === 'laoban'){
-                return <Redirect to='/laobaninfo' />
-            }else{
-                return <Redirect to='/dasheninfo' />
-            }
-            
-        }
         
     }
     // 处理输入数据的改变： 更新对应的状态
@@ -54,7 +40,11 @@ class Register extends Component {
     }
     render() {
         const {type} = this.state
-        const {redirectTo} = this.props.user
+        const {redirectTo, msg} = this.props.user
+        //console.log(msg)
+        // if(msg){
+        //     Toast.fail(msg)
+        // }
         // 如果有值，就会自动重定向
         if(redirectTo) {
             return <Redirect to={redirectTo}/>
@@ -65,6 +55,7 @@ class Register extends Component {
                <Logo />
                <WingBlank>
                    <List>
+                   {msg ? <div className='error-msg'>{msg}</div> : null}
                        <WhiteSpace/>
                        <InputItem placeholder='请输入用户名' onChange={val => {this.handleChange('username', val)}}>用户名：</InputItem>
                        <WhiteSpace/>    

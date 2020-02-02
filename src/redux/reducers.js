@@ -4,7 +4,13 @@
 
 
 import {combineReducers} from 'redux'
-import {AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER} from './action-types'
+import {
+  AUTH_SUCCESS, 
+  ERROR_MSG, 
+  RECEIVE_USER, 
+  RESET_USER,
+  GET_USERS_LIST
+} from './action-types'
 import {getRedirectTo} from '../utils/index'
 const initUser = {
   username: '', // 用户名
@@ -30,9 +36,19 @@ function user(state=initUser, action){
   }
 }
 
-
-// 向外暴露的状态的结构 {user: {}}
+const initUserList = []
+// 产生userList状态的reducer
+function userList(state = initUserList, action){
+  switch(action.type){
+    case GET_USERS_LIST:
+      return action.data  // data为userList
+    default:
+      return state
+  }
+}
+// 向外暴露的状态的结构 {user: {}, userList: []}
 export default combineReducers({
-  user
+  user,
+  userList
 }) 
 
